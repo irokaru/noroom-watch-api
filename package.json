@@ -8,7 +8,7 @@
     "lint": "eslint --fix src/**/*",
     "format": "prettier -w src/**/*",
     "lint-staged": "lint-staged",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "prepare": "husky install"
   },
   "author": "",
