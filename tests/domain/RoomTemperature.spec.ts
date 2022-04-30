@@ -1,7 +1,7 @@
-import { createRoomTemperature } from "#/domain/RoomTemperature";
+import { createMeterDevice } from "#/domain/RoomTemperature";
 
-describe("RoomTemperature.ts", () => {
-  test("RoomTemperatureが生成されるか", () => {
+describe("createMeterDevice", () => {
+  test("MeterDeviceが生成されるか", () => {
     const suites = [
       {
         temperature: 10,
@@ -10,7 +10,7 @@ describe("RoomTemperature.ts", () => {
     ];
 
     for (const suite of suites) {
-      const result = createRoomTemperature(suite);
+      const result = createMeterDevice(suite);
       expect(suite).toEqual(result.getJson());
     }
   });

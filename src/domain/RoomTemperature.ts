@@ -1,15 +1,16 @@
 import { Device, IDeviceValueType } from "./Device";
 
-interface IRoomTemperatureValueType extends IDeviceValueType {
+interface IMeterDeviceValueType extends IDeviceValueType {
+  deviceType: "meter";
   temperature: number;
   humidity: number;
 }
 
-export class RoomTemperature extends Device {
+export class MeterDevice extends Device<IMeterDeviceValueType> {
   readonly temperature: number;
   readonly humidity: number;
 
-  constructor(init: Partial<IRoomTemperatureValueType>) {
+  constructor(init: Partial<Device<IMeterDeviceValueType>>) {
     super(init);
     Object.assign(this, init);
   }
@@ -27,8 +28,6 @@ export class RoomTemperature extends Device {
   }
 }
 
-export const createRoomTemperature = (
-  init?: Partial<RoomTemperature>
-): RoomTemperature => {
-  return new RoomTemperature(init);
+export const createMeterDevice = (init?: Partial<MeterDevice>): MeterDevice => {
+  return new MeterDevice(init);
 };
