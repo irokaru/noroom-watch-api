@@ -43,6 +43,8 @@ describe("findOneDeviceByName", () => {
       Device | undefined
     ][] = [
       [[200, [], "success"], "aaa", undefined],
+      [[200, ["hogehoge"], "error"], "aaa", undefined],
+      [[200, ["hogehoge"], "error"], "hogehoge", undefined],
       [
         [200, ["hogehoge"], "success"],
         "hogehoge",
@@ -63,5 +65,13 @@ describe("findOneDeviceByName", () => {
       const result = await findOneDeviceByName("dummy", deviceName);
       expect(result).toEqual(exp);
     }
+  });
+
+  test("エラー時undefinedになるか", async () => {
+    (findDeviceList as jest.Mock).mockImplementation(() =>
+      Promise.reject({ error: "dummy" })
+    );
+    const result = await findOneDeviceByName("dummy", "catch test");
+    expect(result).toBeUndefined();
   });
 });
