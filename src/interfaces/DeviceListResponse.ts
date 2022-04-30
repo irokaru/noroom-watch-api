@@ -7,7 +7,7 @@ export type TDeviceListResponse = {
     deviceList: Device[];
     infraredRemoteList: any[];
   };
-  message: "success" | "error";
+  message: "success" | string;
 };
 
 export interface IDeviceListResponse extends AxiosResponse {
