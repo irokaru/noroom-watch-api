@@ -1,12 +1,12 @@
 import { IBase } from "./Base";
 
-type DeviceValueType = {
+export interface IDeviceValueType {
   deviceId: string;
   deviceName: string;
   deviceType: string;
   enableCloudService: boolean;
   hubDeviceId: string;
-};
+}
 
 export class Device implements IBase {
   readonly deviceId: string;
@@ -15,11 +15,11 @@ export class Device implements IBase {
   readonly enableCloudService: boolean;
   readonly hubDeviceId: string;
 
-  constructor(init: Partial<DeviceValueType>) {
+  constructor(init: Partial<IDeviceValueType>) {
     Object.assign(this, init);
   }
 
-  getJson(): DeviceValueType {
+  getJson(): IDeviceValueType {
     return {
       deviceId: this.deviceId,
       deviceName: this.deviceName,

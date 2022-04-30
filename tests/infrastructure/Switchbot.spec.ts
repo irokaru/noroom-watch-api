@@ -30,7 +30,6 @@ describe("findDeviceStatus", () => {
     const device = devicesResponse.data.body.deviceList[1];
 
     const result = await findDeviceStatus(process.env.SWITCHBOT_TOKEN, device);
-    console.log(result.data);
     expect(result.data.message).toEqual("success");
   });
 
