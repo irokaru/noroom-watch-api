@@ -1,4 +1,4 @@
-import { createDevice, Device } from "#/domain/Device";
+import { Device } from "#/domain/Device";
 import { findDeviceList } from "#/infrastructure/Switchbot";
 
 export const findOneDeviceByName = async (
@@ -14,7 +14,7 @@ export const findOneDeviceByName = async (
 
     const device = deviceList.filter((d) => d.deviceName === deviceName)[0];
 
-    return device ? createDevice(device) : undefined;
+    return device;
   } catch (_) {
     return undefined;
   }

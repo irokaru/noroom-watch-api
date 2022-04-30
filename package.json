@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "ts-node server.ts",
+    "start": "ts-node -r tsconfig-paths/register src/application/server.ts --traceResolution",
     "lint": "eslint --fix src/**/*",
     "format": "prettier -w src/**/*",
     "lint-staged": "lint-staged",
@@ -38,6 +38,7 @@
     "prettier": "^2.6.2",
     "ts-jest": "^27.1.4",
     "ts-node": "^10.7.0",
+    "tsconfig-paths": "^3.14.1",
     "typescript": "^4.6.3"
   },
   "husky": {

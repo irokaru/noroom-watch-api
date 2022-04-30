@@ -8,7 +8,7 @@ export interface IDeviceValueType {
   hubDeviceId: string;
 }
 
-export class Device<T = any> implements IBase {
+export class Device implements IBase {
   readonly deviceId: string;
   readonly deviceName: string;
   readonly deviceType: string;
@@ -30,6 +30,6 @@ export class Device<T = any> implements IBase {
   }
 }
 
-export const createDevice = (init?: Partial<Device<any>>): Device<any> => {
+export const createDevice = (init?: Partial<Device>): Device => {
   return new Device(init);
 };
