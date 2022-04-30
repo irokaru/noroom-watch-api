@@ -1,4 +1,4 @@
-import { createMeterDevice } from "#/domain/RoomTemperature";
+import { createMeterDevice } from "#/domain/MeterDevice";
 
 describe("createMeterDevice", () => {
   test("MeterDeviceが生成されるか", () => {
