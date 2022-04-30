@@ -30,6 +30,6 @@ export class Device implements IBase {
   }
 }
 
-export const createDevice = (init?: Partial<Device>): IBase => {
+export const createDevice = (init?: Partial<Device>): Device => {
   return new Device(init);
 };
