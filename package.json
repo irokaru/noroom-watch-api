@@ -8,7 +8,8 @@
     "lint": "eslint --fix src/**/*",
     "format": "prettier -w src/**/*",
     "lint-staged": "lint-staged",
-    "test": "jest",
+    "test": "jest --verbose",
+    "test:coverage": "jest --coverage",
     "prepare": "husky install"
   },
   "author": "",
