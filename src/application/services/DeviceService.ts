@@ -6,7 +6,7 @@ export const findOneDeviceByName = async (
   deviceName: string
 ): Promise<Device | undefined> => {
   try {
-    const res = await findDeviceList(token);
+    const res = await findDeviceList(token, 1 * 60 * 60);
 
     if (res.data.message !== "success") return undefined;
 
