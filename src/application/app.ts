@@ -42,9 +42,9 @@ app.get("/api/weather", async (req, res) => {
   res.send({
     status: "success",
     weather: weather.weather[0].main,
-    temp: weather.calcTempKelvintoCByTemp(),
-    temp_max: weather.calcTempKelvintoCByTempMax(),
-    temp_min: weather.calcTempKelvintoCByTempMin(),
+    temp: weather.calcTempKelvintoC(),
+    temp_max: weather.calcTempMaxKelvintoC(),
+    temp_min: weather.calcTempMinKelvintoC(),
     icon: weather.getWeatherIconUrl(),
   });
 });

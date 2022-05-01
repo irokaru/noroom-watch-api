@@ -1,49 +1,49 @@
 import { createWeather, TWeather, Weather } from "#/domain/Weather";
 
+const params = {
+  coord: {
+    lon: 139.6917,
+    lat: 35.6895,
+  },
+  weather: [
+    {
+      id: 500,
+      main: "Rain",
+      description: "light rain",
+      icon: "10d",
+    },
+  ],
+  base: "stations",
+  main: {
+    temp: 284.96,
+    temp_min: 283.48,
+    temp_max: 287.34,
+    humidity: 93,
+  },
+  wind: {
+    speed: 6.69,
+    deg: 360,
+    gust: 100,
+  },
+  clouds: {
+    all: 75,
+  },
+  dt: 1651394705,
+  sys: {
+    type: 2,
+    id: 2038398,
+    country: "JP",
+    sunrise: 1651348186,
+    sunset: 1651397210,
+  },
+  timezone: 32400,
+  id: 1850144,
+  name: "Tokyo",
+  cod: 200,
+};
+
 describe("Weather", () => {
   test("Weatherが生成されるか", () => {
-    const params = {
-      coord: {
-        lon: 139.6917,
-        lat: 35.6895,
-      },
-      weather: [
-        {
-          id: 500,
-          main: "Rain",
-          description: "light rain",
-          icon: "10d",
-        },
-      ],
-      base: "stations",
-      main: {
-        temp: 284.96,
-        temp_min: 283.48,
-        temp_max: 287.34,
-        humidity: 93,
-      },
-      wind: {
-        speed: 6.69,
-        deg: 360,
-        gust: 100,
-      },
-      clouds: {
-        all: 75,
-      },
-      dt: 1651394705,
-      sys: {
-        type: 2,
-        id: 2038398,
-        country: "JP",
-        sunrise: 1651348186,
-        sunset: 1651397210,
-      },
-      timezone: 32400,
-      id: 1850144,
-      name: "Tokyo",
-      cod: 200,
-    };
-
     const result = createWeather(params);
     expect(params).toEqual(result.getJson());
   });
@@ -84,5 +84,13 @@ describe("Weather", () => {
       const weather = createWeather(suite[1]);
       expect(suite[0]).toEqual(weather.getWeatherIconUrl(suite[2]));
     }
+  });
+
+  test("摂氏の計算は正しいか", () => {
+    const weather = createWeather(params);
+
+    expect(weather.calcTempKelvintoC()).toEqual(11.8);
+    expect(weather.calcTempMaxKelvintoC()).toEqual(14.2);
+    expect(weather.calcTempMinKelvintoC()).toEqual(10.3);
   });
 });

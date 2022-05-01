@@ -90,19 +90,19 @@ export class Weather implements IBase {
     };
   }
 
-  calcTempKelvintoCByTemp(): number {
-    return this.clacTempKelvintoC(this.main.temp);
+  calcTempKelvintoC(): number {
+    return this._clacTempKelvintoC(this.main.temp);
   }
 
-  calcTempKelvintoCByTempMax(): number {
-    return this.clacTempKelvintoC(this.main.temp_max);
+  calcTempMaxKelvintoC(): number {
+    return this._clacTempKelvintoC(this.main.temp_max);
   }
 
-  calcTempKelvintoCByTempMin(): number {
-    return this.clacTempKelvintoC(this.main.temp_min);
+  calcTempMinKelvintoC(): number {
+    return this._clacTempKelvintoC(this.main.temp_min);
   }
 
-  clacTempKelvintoC(temp: number): number {
+  protected _clacTempKelvintoC(temp: number): number {
     const c = temp - 273.15;
     return Math.round(c * 10) / 10;
   }
