@@ -7,12 +7,9 @@ dotenv.config();
 
 describe("fetchDeviceList", () => {
   test("デバイス一覧が取得できるか", async () => {
-    const suites: string[] = [process.env.SWITCHBOT_TOKEN];
-
-    for (const suite of suites) {
-      const result = await fetchDeviceList(suite);
-      expect(result.data.message).toEqual("success");
-    }
+    const token = process.env.SWITCHBOT_TOKEN;
+    const result = await fetchDeviceList(token);
+    expect(result.data.message).toEqual("success");
   });
 
   test("トークンが不正だった場合は401が返るか", async () => {
