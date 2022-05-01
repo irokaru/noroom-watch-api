@@ -1,31 +1,18 @@
+import { IDeviceValueType } from "#/domain/Device";
+import { IMeterValueType } from "#/domain/Meter";
 import { AxiosResponse } from "axios";
 
-export type TDeviceStatusBody = {
-  deviceId: string;
-  deviceType: string;
-  hubDeviceId: string;
-  [key: string]: any;
-};
+export type TDeviceStatusBody<T = any> = IDeviceValueType & T;
 
-export type TMeterStatusBody = {
-  deviceId: string;
-  deviceType: string;
-  hubDeviceId: string;
-  temperature: number;
-  humidity: number;
-  [key: string]: any;
-};
+export type TMeterStatusBody = TDeviceStatusBody<IMeterValueType>;
 
-export type TDeviceStatusResponse = {
+export type TDeviceStatusResponse<T = TDeviceStatusBody> = {
   statusCode: number;
-  body: TDeviceStatusBody;
+  body: T;
   message: string;
 };
 
-export type TMeterDeviceStatusResponse = {
-  statusCode: number;
-  body: TMeterStatusBody;
-  message: string;
-};
+export type TMeterDeviceStatusResponse =
+  TDeviceStatusResponse<TMeterStatusBody>;
 
-export type IDeviceStatusResponse<T = TDeviceStatusResponse> = AxiosResponse<T>
+export type IDeviceStatusResponse<T = TDeviceStatusResponse> = AxiosResponse<T>;

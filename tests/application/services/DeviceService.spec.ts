@@ -126,4 +126,15 @@ describe("getMeterDeviceStatus", () => {
     const result = await getMeterDeviceStatus("dummy", dummyNotMeter);
     expect(result).toBeNull();
   });
+
+  test("エラー時nullになるか", async () => {
+    (fetchDeviceStatus as jest.Mock).mockImplementation(() =>
+      Promise.reject({ error: "dummy" })
+    );
+    const result = await getMeterDeviceStatus(
+      "dummy",
+      createDummyDevice("dummy", "Meter")
+    );
+    expect(result).toBeNull();
+  });
 });
