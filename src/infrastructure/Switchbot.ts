@@ -2,7 +2,7 @@ import { Device } from "#/domain/Device";
 import { IDeviceListResponse } from "#/interfaces/DeviceListResponse";
 import { IDeviceStatusResponse } from "#/interfaces/DeviceStatusResponse";
 
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { setupCache } from "axios-cache-adapter";
 
 const ENDPOINT = "https://api.switch-bot.com/v1.0";
@@ -22,7 +22,7 @@ export const fetchDeviceList = (
   });
 };
 
-export const fetchDeviceStatus = <T extends IDeviceStatusResponse>(
+export const fetchDeviceStatus = <T = IDeviceStatusResponse>(
   token: string,
   device: Device,
   cacheSec = 0

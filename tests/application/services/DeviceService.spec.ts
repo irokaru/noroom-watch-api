@@ -1,6 +1,10 @@
-import { findDeviceList } from "#/infrastructure/Switchbot";
-import { findOneDeviceByName } from "#/application/services/DeviceService";
+import { fetchDeviceList, fetchDeviceStatus } from "#/infrastructure/Switchbot";
+import {
+  findOneDeviceByName,
+  getMeterDeviceStatus,
+} from "#/application/services/DeviceService";
 import { createDevice, Device } from "#/domain/Device";
+import { TMeterDeviceStatusResponse } from "#/interfaces/DeviceStatusResponse";
 
 jest.mock("#/infrastructure/Switchbot");
 
@@ -28,11 +32,21 @@ const createResultDeviceList = (
   });
 };
 
-const createDummyDevice = (deviceName: string) =>
+const craeteResultDevicestatus = <T>(params: T) => {
+  return Promise.resolve({
+    data: params,
+    status: 200,
+    statusText: "",
+    headers: {},
+    config: {},
+  });
+};
+
+const createDummyDevice = (deviceName: string, deviceType = "dummy") =>
   createDevice({
     deviceId: "0",
     deviceName,
-    deviceType: "dummy",
+    deviceType,
   });
 
 describe("findOneDeviceByName", () => {
@@ -58,7 +72,7 @@ describe("findOneDeviceByName", () => {
     ];
 
     for (const [mockParams, deviceName, exp] of suites) {
-      (findDeviceList as jest.Mock).mockImplementation(() =>
+      (fetchDeviceList as jest.Mock).mockImplementation(() =>
         createResultDeviceList(...mockParams)
       );
 
@@ -68,10 +82,48 @@ describe("findOneDeviceByName", () => {
   });
 
   test("エラー時undefinedになるか", async () => {
-    (findDeviceList as jest.Mock).mockImplementation(() =>
+    (fetchDeviceList as jest.Mock).mockImplementation(() =>
       Promise.reject({ error: "dummy" })
     );
     const result = await findOneDeviceByName("dummy", "catch test");
     expect(result).toBeUndefined();
+  });
+});
+
+describe("getMeterDeviceStatus", () => {
+  test("デバイスの状態が取得できるか", async () => {
+    const dummyMeter = createDummyDevice("dummy meter", "Meter");
+    const returnValue = craeteResultDevicestatus<TMeterDeviceStatusResponse>({
+      statusCode: 200,
+      body: {
+        ...dummyMeter.getJson(),
+        humidity: 50,
+        temperature: 25,
+      },
+      message: "success",
+    });
+
+    (fetchDeviceStatus as jest.Mock).mockImplementation(() => returnValue);
+
+    const result = await getMeterDeviceStatus("dummy", dummyMeter);
+    expect(result).toEqual(await returnValue);
+  });
+
+  test("Meterではないデバイスのときはnullが返るか", async () => {
+    const dummyNotMeter = createDummyDevice("dummy not meter", "dummy");
+    const returnValue = craeteResultDevicestatus<TMeterDeviceStatusResponse>({
+      statusCode: 200,
+      body: {
+        ...dummyNotMeter.getJson(),
+        humidity: 50,
+        temperature: 25,
+      },
+      message: "success",
+    });
+
+    (fetchDeviceStatus as jest.Mock).mockImplementation(() => returnValue);
+
+    const result = await getMeterDeviceStatus("dummy", dummyNotMeter);
+    expect(result).toBeNull();
   });
 });
