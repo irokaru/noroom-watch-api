@@ -106,7 +106,7 @@ describe("getMeterDeviceStatus", () => {
     (fetchDeviceStatus as jest.Mock).mockImplementation(() => returnValue);
 
     const result = await getMeterDeviceStatus("dummy", dummyMeter);
-    expect(result).toEqual(await returnValue);
+    expect(result).toEqual((await returnValue).data.body);
   });
 
   test("Meterではないデバイスのときはnullが返るか", async () => {

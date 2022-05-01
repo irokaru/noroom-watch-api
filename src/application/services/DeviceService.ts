@@ -1,4 +1,5 @@
 import { Device } from "#/domain/Device";
+import { createMeter, Meter } from "#/domain/Meter";
 import { fetchDeviceList, fetchDeviceStatus } from "#/infrastructure/Switchbot";
 import {
   IDeviceStatusResponse,
@@ -10,7 +11,7 @@ export const findOneDeviceByName = async (
   deviceName: string
 ): Promise<Device | undefined> => {
   try {
-    const res = await fetchDeviceList(token, 1 * 60 * 60);
+    const res = await fetchDeviceList(token, 1 * 60 * 60 * 1000);
 
     if (res.data.message !== "success") return undefined;
 
@@ -27,13 +28,15 @@ export const findOneDeviceByName = async (
 export const getMeterDeviceStatus = async (
   token: string,
   device: Device
-): Promise<IDeviceStatusResponse<TMeterDeviceStatusResponse> | null> => {
+): Promise<Meter | null> => {
   if (device.deviceType !== "Meter") return null;
 
   try {
-    return await fetchDeviceStatus<
+    const status = await fetchDeviceStatus<
       IDeviceStatusResponse<TMeterDeviceStatusResponse>
     >(token, device);
+
+    return createMeter(status.data.body);
   } catch (_) {
     return null;
   }
