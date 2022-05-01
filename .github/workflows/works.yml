@@ -34,6 +34,12 @@ jobs:
       - name: Install Dependencies
         run: npm install --legacy-peer-deps
 
+      - name: setup env file
+        run: |
+          touch .env
+          echo "SWITCHBOT_TOKEN=${{ secrets.SWITCHBOT_TOKEN }}" >> .env
+          echo "WEATHEROPENMAP_APP_KEY=$ {{ secrets.WEATHEROPENMAP_APP_KEY }}" >> .env
+
       - name: Test
         run: npm run test:coverage
 
