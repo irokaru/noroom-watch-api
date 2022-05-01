@@ -90,6 +90,23 @@ export class Weather implements IBase {
     };
   }
 
+  calcTempKelvintoCByTemp(): number {
+    return this.clacTempKelvintoC(this.main.temp);
+  }
+
+  calcTempKelvintoCByTempMax(): number {
+    return this.clacTempKelvintoC(this.main.temp_max);
+  }
+
+  calcTempKelvintoCByTempMin(): number {
+    return this.clacTempKelvintoC(this.main.temp_min);
+  }
+
+  clacTempKelvintoC(temp: number): number {
+    const c = temp - 273.15;
+    return Math.round(c * 10) / 10;
+  }
+
   getWeatherIconUrl(size = 4): string {
     return `http://openweathermap.org/img/wn/${this.weather[0].icon}@${size}x.png`;
   }
