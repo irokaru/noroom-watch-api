@@ -19,7 +19,13 @@ app.get("/api/room", async (req, res) => {
   );
   const meterStatus = await getMeterDeviceStatus(configSwitchbot.token, meter);
 
+  if (!meterStatus) {
+    res.send({ status: "error" });
+    return;
+  }
+
   res.send({
+    status: "success",
     temperature: meterStatus.temperature,
     humidity: meterStatus.humidity,
   });
