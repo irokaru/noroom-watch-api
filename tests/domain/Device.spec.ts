@@ -1,6 +1,6 @@
 import { createDevice } from "#/domain/Device";
 
-describe("Device.ts", () => {
+describe("Device", () => {
   test("Deviceが生成されるか", () => {
     const suites = [
       {
