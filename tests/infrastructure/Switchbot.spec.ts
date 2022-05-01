@@ -1,41 +1,41 @@
 import dotenv from "dotenv";
 
-import { findDeviceList, findDeviceStatus } from "#/infrastructure/Switchbot";
+import { fetchDeviceList, fetchDeviceStatus } from "#/infrastructure/Switchbot";
 import { createDevice } from "#/domain/Device";
 
 dotenv.config();
 
-describe("findDeviceList", () => {
+describe("fetchDeviceList", () => {
   test("デバイス一覧が取得できるか", async () => {
     const suites: string[] = [process.env.SWITCHBOT_TOKEN];
 
     for (const suite of suites) {
-      const result = await findDeviceList(suite);
+      const result = await fetchDeviceList(suite);
       expect(result.data.message).toEqual("success");
     }
   });
 
   test("トークンが不正だった場合は401が返るか", async () => {
     try {
-      await findDeviceList("");
+      await fetchDeviceList("");
     } catch (e) {
       expect(e.response.status).toEqual(401);
     }
   });
 });
 
-describe("findDeviceStatus", () => {
+describe("fetchDeviceStatus", () => {
   test("デバイスの情報が取得できるか", async () => {
-    const devicesResponse = await findDeviceList(process.env.SWITCHBOT_TOKEN);
+    const devicesResponse = await fetchDeviceList(process.env.SWITCHBOT_TOKEN);
     const device = devicesResponse.data.body.deviceList[1];
 
-    const result = await findDeviceStatus(process.env.SWITCHBOT_TOKEN, device);
+    const result = await fetchDeviceStatus(process.env.SWITCHBOT_TOKEN, device);
     expect(result.data.message).toEqual("success");
   });
 
   test("トークンが不正だった場合は401が返るか", async () => {
     try {
-      await findDeviceStatus("", createDevice({}));
+      await fetchDeviceStatus("", createDevice({}));
     } catch (e) {
       expect(e.response.status).toEqual(401);
     }

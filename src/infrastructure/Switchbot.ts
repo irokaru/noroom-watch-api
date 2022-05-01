@@ -7,7 +7,7 @@ import { setupCache } from "axios-cache-adapter";
 
 const ENDPOINT = "https://api.switch-bot.com/v1.0";
 
-export const findDeviceList = (
+export const fetchDeviceList = (
   token: string,
   cacheSec = 0
 ): Promise<IDeviceListResponse> => {
@@ -22,14 +22,14 @@ export const findDeviceList = (
   });
 };
 
-export const findDeviceStatus = (
+export const fetchDeviceStatus = <T extends IDeviceStatusResponse>(
   token: string,
   device: Device,
   cacheSec = 0
-): Promise<IDeviceStatusResponse> => {
+): Promise<T> => {
   const cache = setupCache({ maxAge: cacheSec });
 
-  return axios.get(`${ENDPOINT}/devices/${device.deviceId}/status`, {
+  return axios.get<any, T>(`${ENDPOINT}/devices/${device.deviceId}/status`, {
     headers: {
       Authorization: token,
       "Content-Type": "application/json; charset=utf-8",
