@@ -1,4 +1,4 @@
-# noroom watch ui
+# noroom-watch-api
 
 [![codecov](https://codecov.io/gh/irokaru/noroom-watch-api/branch/master/graph/badge.svg?token=TXMMJ87P2H)](https://codecov.io/gh/irokaru/noroom-watch-api)
 
