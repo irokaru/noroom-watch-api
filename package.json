@@ -1,10 +1,10 @@
 {
-  "name": "noroomv2-api",
+  "name": "noroom-watch-ui",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "ts-node -r tsconfig-paths/register src/application/server.ts --traceResolution",
+    "start": "ts-node -r tsconfig-paths/register src/server.ts --traceResolution",
     "lint": "eslint --fix src/**/*",
     "format": "prettier -w src/**/*",
     "lint-staged": "lint-staged",

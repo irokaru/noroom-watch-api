@@ -1,5 +1,7 @@
 # noroom watch ui
 
+[![codecov](https://codecov.io/gh/irokaru/noroom-watch-api/branch/master/graph/badge.svg?token=TXMMJ87P2H)](https://codecov.io/gh/irokaru/noroom-watch-api)
+
 自室の情報と天気予報を提供してくれるやつ。
 
 ## 環境

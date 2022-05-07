@@ -2,12 +2,12 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import express from "express";
 
-import { configSwitchbot, configWeather } from "./services/config";
+import { configSwitchbot, configWeather } from "./application/services/config";
 import {
   findOneDeviceByName,
   getMeterDeviceStatus,
-} from "./services/DeviceService";
-import { getWeather } from "./services/WeatherService";
+} from "./application/services/DeviceService";
+import { getWeather } from "./application/services/WeatherService";
 
 const app = express();
 app.use(bodyParser.json());
