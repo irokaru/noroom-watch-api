@@ -37,36 +37,112 @@ export type TWeatherSys = {
   sunset: number;
 };
 
+export type TWeatherArea = {
+  area: {
+    name: string;
+    code: string;
+  };
+  weatherCodes: string[];
+  weathers: string[];
+  winds: string[];
+  waves: string[];
+};
+
+export type TWeatherDescription = {
+  publicTime: string;
+  publicTimeFormatted: string;
+  headlineText: string;
+  bodyText: string;
+  text: string;
+};
+
+export type TWeatherForecast = {
+  date: string;
+  dateLabel: string;
+  telop: string;
+  detail: TWeatherForecastDetail;
+  temperature: TWeatherForecastTempareture;
+  chanceOfRain: TWeatherForecastChanceOfRain;
+  image: TWeatherForecastImage;
+};
+
+export type TWeatherForecastDetail = {
+  weather: string;
+  wind: string;
+  save: string;
+};
+
+export type TWeatherForecastTempareture = {
+  max: {
+    celsius: string | null;
+    fahrenheit: string | null;
+  };
+  min: {
+    celsius: string | null;
+    fahrenheit: string | null;
+  };
+};
+
+export type TWeatherForecastChanceOfRain = {
+  T00_06: string;
+  T06_12: string;
+  T12_18: string;
+  T18_24: string;
+};
+
+export type TWeatherForecastImage = {
+  title: string;
+  url: string;
+  width: number;
+  height: number;
+};
+
+export type TWeatherLocation = {
+  area: string;
+  profecture: string;
+  district: string;
+  city: string;
+};
+
+export type TWeatherCopyright = {
+  title: string;
+  link: string;
+  image: {
+    title: string;
+    link: string;
+    url: string;
+    width: number;
+    height: number;
+  };
+  provider: {
+    link: string;
+    name: string;
+    note: string;
+  }[];
+};
+
 export interface IWeatherValueType {
-  coord: TWeatherCoord;
-  weather: TWeather[];
-  base: string;
-  main: TWeatherMain;
-  visibility: string;
-  wind: TWeatherWind;
-  clouds: TWeatherClouds;
-  dt: number;
-  sys: TWeatherSys;
-  timezone: number;
-  id: number;
-  name: string;
-  cod: number;
+  publicTime: string;
+  publicTimeFormatted: string;
+  publishingOffice: string;
+  title: string;
+  link: string;
+  description: TWeatherDescription;
+  forecasts: TWeatherForecast[];
+  location: TWeatherLocation;
+  copyright: TWeatherCopyright;
 }
 
 export class Weather implements IBase {
-  readonly coord: TWeatherCoord;
-  readonly weather: TWeather[];
-  readonly base: string;
-  readonly main: TWeatherMain;
-  readonly visibility: string;
-  readonly wind: TWeatherWind;
-  readonly clouds: TWeatherClouds;
-  readonly dt: number;
-  readonly sys: TWeatherSys;
-  readonly timezone: number;
-  readonly id: number;
-  readonly name: string;
-  readonly cod: number;
+  readonly publicTime: string;
+  readonly publicTimeFormatted: string;
+  readonly publishingOffice: string;
+  readonly title: string;
+  readonly link: string;
+  readonly description: TWeatherDescription;
+  readonly forecasts: TWeatherForecast[];
+  readonly location: TWeatherLocation;
+  readonly copyright: TWeatherCopyright;
 
   constructor(init: Partial<Weather>) {
     Object.assign(this, init);
@@ -74,41 +150,38 @@ export class Weather implements IBase {
 
   getJson(): IWeatherValueType {
     return {
-      coord: this.coord,
-      weather: this.weather,
-      base: this.base,
-      main: this.main,
-      visibility: this.visibility,
-      wind: this.wind,
-      clouds: this.clouds,
-      dt: this.dt,
-      sys: this.sys,
-      timezone: this.timezone,
-      id: this.id,
-      name: this.name,
-      cod: this.cod,
+      publicTime: this.publicTime,
+      publicTimeFormatted: this.publicTimeFormatted,
+      publishingOffice: this.publishingOffice,
+      title: this.title,
+      link: this.link,
+      description: this.description,
+      forecasts: this.forecasts,
+      location: this.location,
+      copyright: this.copyright,
     };
   }
 
-  calcTempKelvintoC(): number {
-    return this._clacTempKelvintoC(this.main.temp);
+  getLatestCelsiusTemperatureMin(): number {
+    for (const forecast of this.forecasts) {
+      const min = forecast.temperature.min.celsius;
+      if (min) return Number(min);
+    }
+
+    return 0;
   }
 
-  calcTempMaxKelvintoC(): number {
-    return this._clacTempKelvintoC(this.main.temp_max);
+  getLatestCelsiusTemperatureMax(): number {
+    for (const forecast of this.forecasts) {
+      const min = forecast.temperature.max.celsius;
+      if (min) return Number(min);
+    }
+
+    return 0;
   }
 
-  calcTempMinKelvintoC(): number {
-    return this._clacTempKelvintoC(this.main.temp_min);
-  }
-
-  protected _clacTempKelvintoC(temp: number): number {
-    const c = temp - 273.15;
-    return Math.round(c * 10) / 10;
-  }
-
-  getWeatherIconUrl(size = 4): string {
-    return `http://openweathermap.org/img/wn/${this.weather[0].icon}@${size}x.png`;
+  getSimpleWeather(): string {
+    return this.forecasts[0].telop;
   }
 }
 
