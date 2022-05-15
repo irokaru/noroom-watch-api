@@ -28,6 +28,7 @@ jobs:
           touch .env
           echo "SWITCHBOT_TOKEN=${{ secrets.SWITCHBOT_TOKEN }}" >> .env
           echo "WEATHEROPENMAP_APP_KEY=${{ secrets.WEATHEROPENMAP_APP_KEY }}" >> .env
+          echo "JMA_WEATHER_CODE=${{ secrets.JMA_WEATHER_CODE }}" >> .env
 
       - name: Test
         run: npm run test:coverage
