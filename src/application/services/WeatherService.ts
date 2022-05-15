@@ -1,12 +1,13 @@
 import { createWeather, Weather } from "#/domain/Weather";
-import { fetchWeather } from "#/infrastructure/OpenWeatherMap";
+import { fetchWeather } from "#/infrastructure/Tsukumijima";
 
 export const getWeather = async (
-  appkey: string,
-  area: string
+  code: string
 ): Promise<Weather | undefined> => {
   try {
-    const res = await fetchWeather(appkey, area);
+    const res = await fetchWeather(code);
+
+    if ("error" in res.data) throw new Error("has error");
 
     return createWeather(res.data);
   } catch (_) {
