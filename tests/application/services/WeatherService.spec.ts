@@ -18,9 +18,9 @@ describe("fetchWeather", () => {
   });
 
   test("エラーレスポンス時にundefinedになるか", async () => {
-    (fetchWeather as jest.Mock).mockImplementation(() => {
-      Promise.resolve({ error: "this is error" });
-    });
+    (fetchWeather as jest.Mock).mockImplementation(() =>
+      Promise.resolve({ data: { error: "this is error" } })
+    );
 
     const result = await getWeather("dummy");
     expect(result).toBeUndefined();
