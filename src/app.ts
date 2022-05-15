@@ -33,7 +33,7 @@ app.get("/api/room", async (req, res) => {
 });
 
 app.get("/api/weather", async (req, res) => {
-  const weather = await getWeather(configWeather.appKey, configWeather.area);
+  const weather = await getWeather(configWeather.code);
   if (!weather) {
     res.send({ status: "error" });
     return;
@@ -41,11 +41,9 @@ app.get("/api/weather", async (req, res) => {
 
   res.send({
     status: "success",
-    weather: weather.weather[0].main,
-    temp: weather.calcTempKelvintoC(),
-    temp_max: weather.calcTempMaxKelvintoC(),
-    temp_min: weather.calcTempMinKelvintoC(),
-    icon: weather.getWeatherIconUrl(),
+    weather: weather.getSimpleWeather(),
+    temp_max: weather.getLatestCelsiusTemperatureMax(),
+    temp_min: weather.getLatestCelsiusTemperatureMin(),
   });
 });
 

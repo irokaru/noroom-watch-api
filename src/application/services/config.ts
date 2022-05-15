@@ -10,4 +10,5 @@ export const configSwitchbot = {
 export const configWeather = {
   appKey: process.env.WEATHEROPENMAP_APP_KEY,
   area: process.env.WEATHEROPENMAP_AREA,
+  code: process.env.JMA_WEATHER_CODE,
 };
