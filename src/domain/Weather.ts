@@ -1,53 +1,5 @@
 import { IBase } from "./Base";
 
-export type TWeatherCoord = {
-  lon: number;
-  lat: number;
-};
-
-export type TWeather = {
-  id: number;
-  main: string;
-  description: string;
-  icon: string;
-};
-
-export type TWeatherMain = {
-  temp: number;
-  temp_min: number;
-  temp_max: number;
-  humidity: number;
-};
-
-export type TWeatherWind = {
-  speed: number;
-  deg: number;
-  gust: number;
-};
-
-export type TWeatherClouds = {
-  all: number;
-};
-
-export type TWeatherSys = {
-  type: number;
-  id: number;
-  country: string;
-  sunrise: number;
-  sunset: number;
-};
-
-export type TWeatherArea = {
-  area: {
-    name: string;
-    code: string;
-  };
-  weatherCodes: string[];
-  weathers: string[];
-  winds: string[];
-  waves: string[];
-};
-
 export type TWeatherDescription = {
   publicTime: string;
   publicTimeFormatted: string;
@@ -67,9 +19,9 @@ export type TWeatherForecast = {
 };
 
 export type TWeatherForecastDetail = {
-  weather: string;
-  wind: string;
-  save: string;
+  weather: string | null;
+  wind: string | null;
+  wave: string | null;
 };
 
 export type TWeatherForecastTempareture = {
@@ -99,7 +51,7 @@ export type TWeatherForecastImage = {
 
 export type TWeatherLocation = {
   area: string;
-  profecture: string;
+  prefecture: string;
   district: string;
   city: string;
 };
@@ -181,7 +133,7 @@ export class Weather implements IBase {
   }
 
   getSimpleWeather(): string {
-    return this.forecasts[0].telop;
+    return this.forecasts[0].telop[0];
   }
 }
 
